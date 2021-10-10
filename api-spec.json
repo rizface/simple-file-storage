@@ -1,0 +1,170 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Simple File Storage",
+    "description": "this simple file storage working as my own cloud storage",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:8081/api"
+    }
+  ],
+  "paths": {
+    "/save": {
+      "post": {
+        "description": "upload new images",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                  "valid": {
+                    "value": {
+                      "images": ["image data url"]
+                    }
+                  }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "response if upload success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "code": 200,
+                      "status": "upload success",
+                      "data": ["http://localhost:8001/my/image1.png", "http://localhost:8001/my/image2.jpg"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "response if bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "examples": {
+                  "bad-request": {
+                    "value": {
+                      "code": 400,
+                      "status": "bad request",
+                      "data": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "response if unauthenticated request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "examples": {
+                  "unauthenticated": {
+                    "value": {
+                      "code": 403,
+                      "status": "unauthenticated request",
+                      "data": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "response if internal server error happen",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "status" : {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "examples": {
+                  "internal-server-error": {
+                    "value": {
+                      "code": 500,
+                      "status": "internal server error",
+                      "data": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
